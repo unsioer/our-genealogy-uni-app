@@ -1,17 +1,19 @@
 {
-	"pages": [{
-		"path": "pages/index/index",
-		"style": {
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": 
+			{
 			"navigationBarTitleText": "uni-app"
-		}
-	}    ,{
+			}
+		}    
+		,{
             "path" : "pages/self/self",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
             }
-            
         }
         ,{
             "path" : "pages/square/square",
@@ -20,7 +22,6 @@
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
             }
-            
         }
         ,{
             "path" : "pages/familyTrees/familyTrees",
@@ -46,8 +47,7 @@
             {
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
-            }
-            
+            } 
         }
     ],
 	"globalStyle": {

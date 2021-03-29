@@ -6,7 +6,7 @@
 		</view>	
 			
 		<view id="button_div">
-			<button type="primary">退出登录</button>
+			<button type="primary" @click="login()">{{this.$store.state.hasLogin?'退出登录':'登录'}}</button>
 		</view>	
 		
 		<view class="function">
@@ -37,7 +37,19 @@
 			}
 		},
 		methods: {
-			
+			login(){
+				if(this.$store.state.hasLogin){//已经登录状态，退出
+					this.$store.commit('logout',this.$store.state.userInfo)
+					uni.switchTab({
+						url:'/pages/index/index'
+					})
+				}
+				else{//未登录状态，转登录
+					uni.navigateTo({
+						url:'/pages/login/login'
+					})
+				}
+			}
 		}
 	}
 </script>
