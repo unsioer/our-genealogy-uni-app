@@ -7,6 +7,9 @@ Vue.prototype.$store = store;
 
 Vue.config.productionTip = false
 
+let config = require("./vue.config.js");
+Vue.prototype.$config = config;
+
 App.mpType = 'app'
 
 const app = new Vue({

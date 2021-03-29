@@ -1,9 +1,9 @@
 <template>
 	<view>
-		<uni-forms :rules="rules" :value="formData" ref="form" validate-trigger="bind" err-show-type="undertext">
+		<uni-forms ref="form" validate-trigger="bind" err-show-type="undertext">
 			<uni-group title="基本信息" top="0">
-				<uni-forms-item name="name" required label="用户名">
-					<uni-easyinput type="text" :inputBorder="true" v-model="loginData.userName" placeholder="请输入用户名">
+				<uni-forms-item name="email" required label="邮箱">
+					<uni-easyinput type="text" :inputBorder="true" v-model="loginData.email" placeholder="请输入邮箱">
 					</uni-easyinput>
 				</uni-forms-item>
 				<uni-forms-item name="password" required label="密码">
@@ -19,22 +19,38 @@
 </template>
 
 <script>
+	import axios from 'axios';
 	export default {
 		data() {
 			return {
 				loginData: {
-					userName: '测试用户',
-					password: 'ABCD',
+					//userName: '测试用户',
+					//password: 'ABCD',
 				}
 			}
 		},
 		methods: {
 			login(){
-				this.$store.commit('login',this.loginData)
-				console.log('跳转至首页')
-				uni.switchTab({
-					url:'/pages/index/index'
+				if (!(this.loginData.email && this.loginData.password)) {
+					console.warn('账户名和密码不能为空')
+					return;
+				}
+				this.loggingin = true;
+				axios.post("/api/login", {email: this.loginData.email, password: this.loginData.password})
+				.then(res => {
+					console.log(res)
+				    if (res.status === 200) {
+				        uni.switchTab({
+				        	url:'/pages/index/index'
+				        })
+				    } else {
+				        //
+				    }
 				})
+				.finally(() => {
+				    this.loggingin = false;
+				});
+				
 			}
 		}
 	}
