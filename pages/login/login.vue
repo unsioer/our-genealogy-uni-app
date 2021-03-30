@@ -12,6 +12,9 @@
 			</uni-group>
 		</uni-forms>
 		<view>
+			<navigator url="/pages/register/register" open-type="redirect" hover-class="other-navigator-hover">
+				<button>注册</button>
+			</navigator>
 			<button @click="login()">登录</button>
 		</view>
 		
@@ -32,7 +35,7 @@
 		methods: {
 			login(){
 				if (!(this.loginData.email && this.loginData.password)) {
-					console.warn('账户名和密码不能为空')
+					console.warn('用户名和密码不能为空')
 					return;
 				}
 				this.loggingin = true;

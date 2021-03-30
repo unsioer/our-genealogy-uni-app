@@ -1,48 +1,78 @@
-
 <template>
 	<view>
 		<uni-forms :rules="rules" :value="formData" ref="form" validate-trigger="bind" err-show-type="undertext">
 			<uni-group title="基本信息" top="0">
 				<uni-forms-item name="name" required label="用户名">
-					<uni-easyinput type="text" :inputBorder="true" v-model="formData.name" placeholder="请输入用户名"></uni-easyinput>
+					<uni-easyinput type="text" :inputBorder="true" v-model="formData.name" placeholder="请输入用户名">
+					</uni-easyinput>
 				</uni-forms-item>
 				<uni-forms-item name="age" required label="年龄">
-					<input type="text" v-model="formData.age" class="uni-input-border" @blur="binddata('age', $event.detail.value)" placeholder="请输入年龄" />
+					<input type="text" v-model="formData.age" class="uni-input-border"
+						@blur="binddata('age', $event.detail.value)" placeholder="请输入年龄" />
 				</uni-forms-item>
-				<uni-forms-item required name="birth" label="出生日期">
-					<uni-datetime-picker timestamp v-model="formData.birth"></uni-datetime-picker>
+				<uni-forms-item name="birth" label="出生日期">
+					<picker mode="date" v-model="formData.birth">
+						<input class="uni-input-border" disabled="true" v-model="formData.birth"></input>
+					</picker>
 				</uni-forms-item>
 				
+
 			</uni-group>
-				<uni-group title="详细信息">
-					<uni-forms-item required name="sex" label="性别">
-						<uni-data-checkbox v-model="formData.sex" :localdata="sex"></uni-data-checkbox>
-					</uni-forms-item>
-					<uni-forms-item name="remarks" label="备注">
-						<uni-easyinput type="textarea" v-model="formData.remarks" :maxlength="20" placeholder="请输入备注"></uni-easyinput>
-					</uni-forms-item>
-				</uni-group>
+			<uni-group title="详细信息">
+				<uni-forms-item required name="sex" label="性别">
+					<uni-data-checkbox v-model="formData.sex" :localdata="sex"></uni-data-checkbox>
+				</uni-forms-item>
+				<uni-forms-item name="remarks" label="备注">
+					<uni-easyinput type="textarea" v-model="formData.remarks" :maxlength="20" placeholder="请输入备注">
+					</uni-easyinput>
+				</uni-forms-item>
+			</uni-group>
+			<uni-group title="验证">
+				<uni-forms-item name="email" required label="邮箱">
+					<uni-easyinput type="text" :inputBorder="true" v-model="formData.email" placeholder="请输入邮箱地址">
+					</uni-easyinput>
+					<button type="primary" @click="sendMail()">发送验证邮件</button>
+				</uni-forms-item>
+			</uni-group>
 			<view>
-				<button  @click="submitForm('form')">校验表单</button>
-				<button  @click="resetForm">重置表单</button>
-				<button>注册</button>
+				<button @click="resetForm">重置表单</button>
+				<button @click="submitForm('form')">注册</button>
 			</view>
 		</uni-forms>
 	</view>
 </template>
- 
+
 <script>
+	function getDate(type) {
+		const date = new Date();
+
+		let year = date.getFullYear();
+		let month = date.getMonth() + 1;
+		let day = date.getDate();
+
+		if (type === 'start') {
+			year = year - 10;
+		} else if (type === 'end') {
+			year = year + 10;
+		}
+		month = month > 9 ? month : '0' + month;;
+		day = day > 9 ? day : '0' + day;
+
+		return `${year}-${month}-${day}`;
+	}
+
 	export default {
 		data() {
 			return {
+				isPassed: false,
+				startDate: getDate('start'),
+				endDate: getDate('end'),
 				formData: {
 					name: '',
 					age: 18,
 					email: '',
 					sex: '0',
-					remarks: '',
 					checked: false,
-					weight: 120,
 					birth: ''
 				},
 				sex: [{
@@ -87,25 +117,11 @@
 							}
 						]
 					},
-					weight: {
-						rules: [{
-								format: 'number',
-								errorMessage: '体重必须是数字'
-							},
-							{
-								minimum: 50,
-								maximum: 300,
-								errorMessage: '体重应该大于 {minimum} 斤，小于 {maximum} 斤'
-							}
-						]
-					},
 					birth: {
-						rules: [
-							{
-								required: true,
-								errorMessage: '请选择时间'
-							}
-						]
+						rules: [{
+							required: true,
+							errorMessage: '请选择日期'
+						}]
 					},
 					email: {
 						rules: [{
@@ -131,21 +147,40 @@
 				this.formData.checked = value
 				this.$refs.form.setValue(name, value)
 			},
- 
+
+			register() {
+				uni.switchTab({
+					url: '../index/index'
+				})
+			},
+
+			sendMail() {
+				this.isPassed = true;
+			},
+
 			submitForm(form) {
 				this.$refs[form]
 					.submit()
 					.then(res => {
 						console.log('表单的值：', res)
-						uni.showToast({
-							title: '验证成功'
-						})
+						if (this.isPassed == true) {
+							uni.showToast({
+								title: '验证成功'
+							})
+							this.register()
+						} else {
+							uni.show
+							uni.showToast({
+								icon: 'none',
+								title: '请进行验证'
+							})
+						}
 					})
 					.catch(errors => {
 						console.error('验证失败：', errors)
 					})
 			},
- 
+
 			//重置表单 。原生的组件input组件不能重置表单
 			resetForm() {
 				this.$refs.form.resetFields()
@@ -163,7 +198,7 @@
 						console.error('验证失败：', errors)
 					})
 			},
- 
+
 			clearValidate(form, name) {
 				if (!name) name = []
 				this.$refs[form].clearValidate(name)
