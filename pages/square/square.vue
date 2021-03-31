@@ -1,28 +1,92 @@
 <template>
 	<view>
+		<!-- 下面这排日期，好像不需要？ -->
 		<uni-section title="1970-01-01" type="line"></uni-section>
-		<view class="example-body">
-			<uni-card :is-shadow="false" title="X氏家谱" mode="style" thumbnail="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png" extra="描述" note="true">
-				<block slot="footer">
-					<view class="footer-box">
-						<view class=""><text class="footer-box__item">收藏</text></view>
-						<view class=""><text class="footer-box__item">评论</text></view>
-						<view class=""><text class="footer-box__item">分享</text></view>
-					</view>
-				</block>
-			</uni-card>
-		</view>
+		<!-- 循环卡片视图 -->
+				<view class="example-body" v-for="item in infoData" :key="index">
+					<uni-card :is-shadow="false" :title="item.title" mode="style" :thumbnail="item.thumbnail" :extra="item.extra" note="true" @click="showMore(item.id)">
+						<block slot="footer">
+							<view class="footer-box">
+								<view class=""><text class="footer-box__item" @click="like(item.id)">收藏</text></view>
+								<view class=""><text class="footer-box__item" @click="comment(item.id)">评论</text></view>
+								<view class=""><text class="footer-box__item" @click="share(item.id)">分享</text></view>
+							</view>
+						</block>
+					</uni-card>
+				</view>
 	</view>
 </template>
 <script>
 	export default {
 		data() {
 			return {
-				
+				test:'testtitle',
+				infoData:[
+					{
+						id:1,
+						title:'标题1',
+						thumbnail:'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png',
+						extra:'描述1'
+					},
+					{
+						id:2,
+						title:'标题2',
+						thumbnail:'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png',
+						extra:'描述2'
+					}
+				]
 			}
 		},
 		methods: {
-			
+			onLoad(){
+				//获取infoData，即获得消息的API
+			},
+			showMore(id){
+				console.log("查看"+id+"更多信息")
+				//转推送信息页
+			},
+			like(id){
+				if(!this.$store.state.hasLogin){
+					console.log("没有登录")
+					uni.showToast({
+						title: '请先登录！',
+						icon:'none',
+						duration: 2000
+					});
+				}
+				else{
+					console.log("用户"+this.$store.state.userInfo+"收藏了:"+id)
+					//收藏API
+				}	
+			},
+			comment(id){
+				if(!this.$store.state.hasLogin){
+					console.log("没有登录")
+					uni.showToast({
+						title: '请先登录！',
+						icon:'none',
+						duration: 2000
+					});
+				}
+				else{
+					console.log("用户"+this.$store.state.userInfo+"评论了:"+id)
+					//评论API
+				}	
+			},
+			share(id){
+				if(!this.$store.state.hasLogin){
+					console.log("没有登录")
+					uni.showToast({
+						title: '请先登录！',
+						icon:'none',
+						duration: 2000
+					});
+				}
+				else{
+					console.log("用户"+this.$store.state.userInfo+"分享了:"+id)
+					//分享API
+				}	
+			},
 		}
 	}
 </script>
