@@ -2,31 +2,27 @@
 	<view>
 		<view class="uni-margin-wrap">
 			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
-				<swiper-item>
-					<view class="swiper-item uni-bg-red">消息1</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="swiper-item uni-bg-green">消息2</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="swiper-item uni-bg-blue">消息3</view>
-				</swiper-item>
+				<swiper-item v-for="item in imgList" :key="index">  
+				            <view class="swiper-item">  
+				                <image :src="item.img" class="swiper-item_img" mode="aspectFill" @click="showMore(item.id)" />  
+				            </view>  
+				        </swiper-item>  
 			</swiper>
 		</view>
 		
 		<uni-section title="1970-01-01" type="line"></uni-section>
-		<view class="example-body">
-			<uni-card :is-shadow="true" title="标题文字" mode="style" thumbnail="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png" extra="额外信息" note="true">
-				<text class="content-box-text">描述</text>
-				<block slot="footer">
-					<view class="footer-box">
-						<view class=""><text class="footer-box__item">喜欢</text></view>
-						<view class=""><text class="footer-box__item">评论</text></view>
-						<view class=""><text class="footer-box__item">分享</text></view>
-					</view>
-				</block>
-			</uni-card>
-		</view>
+		<!-- 循环卡片视图 -->
+				<view class="example-body" v-for="item in infoData" :key="index">
+					<uni-card :is-shadow="false" :title="item.title" mode="style" :thumbnail="item.thumbnail" :extra="item.extra" note="true" @click="showMore(item.id)">
+						<block slot="footer">
+							<view class="footer-box">
+								<view class=""><text class="footer-box__item" @click="like(item.id)">收藏</text></view>
+								<view class=""><text class="footer-box__item" @click="comment(item.id)">评论</text></view>
+								<view class=""><text class="footer-box__item" @click="share(item.id)">分享</text></view>
+							</view>
+						</block>
+					</uni-card>
+				</view>
 	</view>
 </template>
 <script>
@@ -37,16 +33,92 @@
 				indicatorDots: true,
 				autoplay: true,
 				interval: 2000,
-				duration: 500
+				duration: 500,
+				infoData:[
+					{
+						id:1,
+						title:'标题1',
+						thumbnail:'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png',
+						extra:'描述1'
+					},
+					{
+						id:2,
+						title:'标题2',
+						thumbnail:'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png',
+						extra:'描述2'
+					}
+				],
+				imgList:[{
+					id:1,
+					img:'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png',
+				},
+				{
+					id:2,
+					img:'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png',	
+				},
+				]
 			}
 		},
 		methods: {
-			
+			onLoad(){
+				//获取imgList,即滚最上方动图片信息的API
+				//获取infoData，即获得消息的API
+			},
+			showMore(id){
+				console.log("查看"+id+"更多信息")
+				//转推送信息页
+			},
+			like(id){
+				if(!this.$store.state.hasLogin){
+					console.log("没有登录")
+					uni.showToast({
+						title: '请先登录！',
+						icon:'none',
+						duration: 2000
+					});
+				}
+				else{
+					console.log("用户"+this.$store.state.userInfo+"收藏了:"+id)
+					//收藏API
+				}	
+			},
+			comment(id){
+				if(!this.$store.state.hasLogin){
+					console.log("没有登录")
+					uni.showToast({
+						title: '请先登录！',
+						icon:'none',
+						duration: 2000
+					});
+				}
+				else{
+					console.log("用户"+this.$store.state.userInfo+"评论了:"+id)
+					//评论API
+				}	
+			},
+			share(id){
+				if(!this.$store.state.hasLogin){
+					console.log("没有登录")
+					uni.showToast({
+						title: '请先登录！',
+						icon:'none',
+						duration: 2000
+					});
+				}
+				else{
+					console.log("用户"+this.$store.state.userInfo+"分享了:"+id)
+					//分享API
+				}	
+			},
 		}
 	}
 </script>
 
 <style>
+	.swiper-item_img{
+		width: 100%;
+		height: 100%;
+	}
 	.uni-margin-wrap {
 		width:690rpx;
 		width: 100%;

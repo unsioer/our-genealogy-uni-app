@@ -11,11 +11,10 @@
 						@blur="binddata('age', $event.detail.value)" placeholder="请输入年龄" />
 				</uni-forms-item>
 				<uni-forms-item name="birth" label="出生日期">
-					<picker mode="date" v-model="formData.birth">
-						<input class="uni-input-border" disabled="true" v-model="formData.birth"></input>
+					<picker mode="date" @change="getBirth">
+						<input class="uni-input-border" disabled="true" v-model="date"></input>
 					</picker>
 				</uni-forms-item>
-				
 
 			</uni-group>
 			<uni-group title="详细信息">
@@ -31,6 +30,8 @@
 				<uni-forms-item name="email" required label="邮箱">
 					<uni-easyinput type="text" :inputBorder="true" v-model="formData.email" placeholder="请输入邮箱地址">
 					</uni-easyinput>
+				</uni-forms-item>
+				<uni-forms-item>
 					<button type="primary" @click="sendMail()">发送验证邮件</button>
 				</uni-forms-item>
 			</uni-group>
@@ -51,9 +52,9 @@
 		let day = date.getDate();
 
 		if (type === 'start') {
-			year = year - 10;
+			year = year - 90;
 		} else if (type === 'end') {
-			year = year + 10;
+			year = year - 10;
 		}
 		month = month > 9 ? month : '0' + month;;
 		day = day > 9 ? day : '0' + day;
@@ -67,6 +68,7 @@
 				isPassed: false,
 				startDate: getDate('start'),
 				endDate: getDate('end'),
+				date: '',
 				formData: {
 					name: '',
 					age: 18,
@@ -146,6 +148,10 @@
 			change(name, value) {
 				this.formData.checked = value
 				this.$refs.form.setValue(name, value)
+			},
+			
+			getBirth:function(e) {
+				this.date = e.detail.value
 			},
 
 			register() {
