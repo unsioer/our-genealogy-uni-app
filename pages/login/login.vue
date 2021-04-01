@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<uni-forms ref="form" validate-trigger="bind" err-show-type="undertext">
+		<uni-forms ref="form" :value="loginData" validate-trigger="bind" err-show-type="undertext" :rules="rules">
 			<uni-group title="基本信息" top="0">
 				<uni-forms-item name="email" required label="邮箱">
 					<uni-easyinput type="text" :inputBorder="true" v-model="loginData.email" placeholder="请输入邮箱">
@@ -27,8 +27,22 @@
 		data() {
 			return {
 				loginData: {
-					//userName: '测试用户',
-					//password: 'ABCD',
+					email:'',
+					password:''
+				},
+				rules: {
+					email:{
+						rules: [{
+							format: 'email',
+							errorMessage: '请输入正确的邮箱地址'
+						}]
+					},
+					password:{
+						rules: [{
+							format: 'password',
+							errorMessage: '请输入正确的密码'
+						}]
+					}
 				}
 			}
 		},
@@ -43,6 +57,9 @@
 				.then(res => {
 					console.log(res)
 				    if (res.status === 200) {
+						//保存用户信息到store
+						this.$store.commit('login',this.loginData)
+						//跳转
 				        uni.switchTab({
 				        	url:'/pages/index/index'
 				        })
@@ -54,7 +71,8 @@
 				    this.loggingin = false;
 				});
 				
-			}
+			},
+			
 		}
 	}
 </script>
