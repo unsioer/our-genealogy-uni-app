@@ -12,7 +12,7 @@
 				</uni-forms-item>
 				<uni-forms-item name="birth" label="出生日期">
 					<picker mode="date" @change="getBirth">
-						<input class="uni-input-border" disabled="true" v-model="date"></input>
+						<input class="uni-input-border" v-model="date"></input>
 					</picker>
 				</uni-forms-item>
 
@@ -21,23 +21,16 @@
 				<uni-forms-item required name="sex" label="性别">
 					<uni-data-checkbox v-model="formData.sex" :localdata="sex"></uni-data-checkbox>
 				</uni-forms-item>
-				<uni-forms-item name="remarks" label="备注">
-					<uni-easyinput type="textarea" v-model="formData.remarks" :maxlength="20" placeholder="请输入备注">
-					</uni-easyinput>
-				</uni-forms-item>
 			</uni-group>
 			<uni-group title="验证">
 				<uni-forms-item name="email" required label="邮箱">
 					<uni-easyinput type="text" :inputBorder="true" v-model="formData.email" placeholder="请输入邮箱地址">
 					</uni-easyinput>
 				</uni-forms-item>
-				<uni-forms-item>
-					<button type="primary" @click="sendMail()">发送验证邮件</button>
-				</uni-forms-item>
 			</uni-group>
 			<view>
 				<button @click="resetForm">重置表单</button>
-				<button @click="submitForm('form')">注册</button>
+				<button @click="register">注册</button>
 			</view>
 		</uni-forms>
 	</view>
@@ -119,12 +112,6 @@
 							}
 						]
 					},
-					birth: {
-						rules: [{
-							required: true,
-							errorMessage: '请选择日期'
-						}]
-					},
 					email: {
 						rules: [{
 							format: 'email',
@@ -160,27 +147,12 @@
 				})
 			},
 
-			sendMail() {
-				this.isPassed = true;
-			},
-
 			submitForm(form) {
 				this.$refs[form]
 					.submit()
 					.then(res => {
 						console.log('表单的值：', res)
-						if (this.isPassed == true) {
-							uni.showToast({
-								title: '验证成功'
-							})
-							this.register()
-						} else {
-							uni.show
-							uni.showToast({
-								icon: 'none',
-								title: '请进行验证'
-							})
-						}
+						
 					})
 					.catch(errors => {
 						console.error('验证失败：', errors)

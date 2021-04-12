@@ -1,5 +1,5 @@
 <template>
-	<view class="content">
+	<view>
 		<view class="userback">
 			<img src="static/logo.png">
 			<view class="userName">测试用户</view>
@@ -12,16 +12,22 @@
 		<view class="function">
 			<view class="container">
 				<view class = "divClass">
-					<img src="static/logo.png">
+					<navigator url="selfInfo">
+						<img src="static/logo.png">
+					</navigator>
 					<view class="text">个人信息</view>
 				</view>
 				<view class = "divClass">
-					<img src="static/logo.png">
+					<navigator url="../familyTrees/treeList">
+						<img src="static/logo.png">
+					</navigator>
 					<view class="text">家谱列表</view>
 				</view>
 				<view class = "divClass">
-					<img src="static/logo.png">
-					<view class="text">消息提醒</view>
+					<navigator url="systemInfo">
+						<img src="static/logo.png">
+					</navigator>
+					<view class="text">我的推送</view>
 				</view>
 			</view>
 		</view>
@@ -50,6 +56,7 @@
 					})
 				}
 			}
+			
 		}
 	}
 </script>
