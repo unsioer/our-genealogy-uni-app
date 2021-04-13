@@ -1,9 +1,10 @@
 <template>
 	<view>
 		<view class="userback">
-			<img src="static/logo.png">
-			<view class="userName">测试用户</view>
+			<img class="head" src="static/logo.png">
+			<view class="userName">用户名</view>
 		</view>	
+		
 			
 		<view id="button_div">
 			<button type="primary" @click="login()">{{this.$store.state.hasLogin?'退出登录':'登录'}}</button>
@@ -24,10 +25,16 @@
 					<view class="text">家谱列表</view>
 				</view>
 				<view class = "divClass">
-					<navigator url="systemInfo">
+					<navigator url="myArticle">
 						<img src="static/logo.png">
 					</navigator>
 					<view class="text">我的推送</view>
+				</view>
+				<view class = "divClass">
+					<navigator url="selfMessage">
+						<img src="static/logo.png">
+					</navigator>
+					<view class="text">我的消息</view>
 				</view>
 			</view>
 		</view>
@@ -76,7 +83,7 @@
 	}
 	
 	.divClass{
-		margin-right: 10%;
+		margin-right: 5%;
 	}
 	
 	.userback {
@@ -90,6 +97,9 @@
 	.userback img {
 		margin: auto;
 		margin-top: 10%;
+	}
+	.head{
+		border-radius: 50%;
 	}
 	.userName{
 		color: #111111;

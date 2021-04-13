@@ -49,15 +49,35 @@
                 "enablePullDownRefresh": false
             } 
         }
-        ,{
-            "path" : "pages/self/selfInfo",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
+        
+		,{
+		    "path" : "pages/self/myArticle",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+		,{
+		    "path" : "pages/self/selfMessage",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+		
+		,{
+		    "path" : "pages/self/selfInfo",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
         ,{
             "path" : "pages/familyTrees/treeList",
             "style" :                                                                                    

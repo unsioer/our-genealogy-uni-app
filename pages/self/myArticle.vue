@@ -2,14 +2,13 @@
 	<view>
 		<!-- 循环卡片视图 -->
 		<view class="example-body" v-for="item in infoData" :key="index">
-			<uni-section :title="item.modified_time" type="line"></uni-section>
-			<uni-card :is-shadow="false" :title="item.title" mode="style" :thumbnail="item.thumbnail"
+			<uni-section class="timeClass" :title="item.modified_time" type="line"></uni-section>
+			<uni-card class="cardClass" :is-shadow="false" :title="item.title" mode="style" :thumbnail="item.thumbnail"
 				:extra="item.extra" note="true" @click="showMore(item.id)">
 				<block slot="footer">
 					<view class="footer-box">
-						<view class=""><text class="footer-box__item" @click="like(item.id)">收藏</text></view>
-						<view class=""><text class="footer-box__item" @click="comment(item.id)">评论</text></view>
-						<view class=""><text class="footer-box__item" @click="share(item.id)">分享</text></view>
+						<view class=""><text class="footer-box__item" @click="editor(item.id)">编辑</text></view>
+						<view class=""><text class="footer-box__item" @click="deleteArticle(item.id)">删除</text></view>
 					</view>
 				</block>
 			</uni-card>
@@ -46,66 +45,31 @@
 				console.log("查看" + id + "更多信息")
 				//转推送信息页
 			},
-			like(id) {
-				if (!this.$store.state.hasLogin) {
-					console.log("没有登录")
-					uni.showToast({
-						title: '请先登录！',
-						icon: 'none',
-						duration: 2000
-					});
-				} else {
-					console.log("用户" + this.$store.state.userInfo + "收藏了:" + id)
-					//收藏API
-				}
+			editor(id) {
+				console.log("用户" + this.$store.state.userInfo + "编辑了:" + id)
+				//转编辑界面？？FIXME
 			},
-			comment(id) {
-				if (!this.$store.state.hasLogin) {
-					console.log("没有登录")
-					uni.showToast({
-						title: '请先登录！',
-						icon: 'none',
-						duration: 2000
-					});
-				} else {
-					console.log("用户" + this.$store.state.userInfo + "评论了:" + id)
-					//评论API
-				}
-			},
-			share(id) {
-				if (!this.$store.state.hasLogin) {
-					console.log("没有登录")
-					uni.showToast({
-						title: '请先登录！',
-						icon: 'none',
-						duration: 2000
-					});
-				} else {
-					console.log("用户" + this.$store.state.userInfo + "分享了:" + id)
-					//分享API
-				}
+			deleteArticle(id) {
+				console.log("用户" + this.$store.state.userInfo + "删除了:" + id)
+				//删除我的推送API
 			},
 		}
 	}
 </script>
 
 <style>
-	
-	.content-box {
-		padding-top: 20rpx;
+	.timeClass{
+		height: 15px;
+		align-items:center;
 	}
-
-	.content-box-text {
-		font-size: 12px;
-		line-height: 22px;
-	}
-
 	.footer-box {
+		height: 10px;
 		/* #ifndef APP-NVUE */
 		display: flex;
 		/* #endif */
 		justify-content: space-between;
 		flex-direction: row;
+		align-items:center;
 	}
 
 	.footer-box__item {

@@ -1,8 +1,8 @@
 <template>
 	<view>
 		<view class="userback">
-			<img src="static/logo.png">
-			<view class="userName">测试用户</view>
+			<img class="head" src="static/logo.png">
+			<view class="userName">用户名</view>
 		</view>	
 		<uni-forms ref="form" :value="userData" validate-trigger="bind" err-show-type="undertext" :rules="rules">
 			<uni-group title="基本信息">
@@ -69,11 +69,15 @@
 
 <style>
 	.userback {
-		height: 200px;
+		height: 100px;
 		background-color: #ffffff;
 		background-repeat: no-repeat;
 		background-size: 100%;
 		text-align: center
+	}
+	.head{
+		border-radius: 50%;
+		
 	}
 	.uni-input-border {
 		padding: 0 10px;
