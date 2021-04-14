@@ -2,7 +2,8 @@
 	<view>
 		<view class="userback">
 			<img class="head" src="static/logo.png">
-			<view class="userName">用户名</view>
+			<textarea class="uni-textarea" v-model="userData.nickname" style="display:initial;"></textarea>
+			
 		</view>	
 		<uni-forms ref="form" :value="userData" validate-trigger="bind" err-show-type="undertext" :rules="rules">
 			<uni-group title="基本信息">
@@ -40,11 +41,13 @@
 </template>
 
 <script>
+	import axios from 'axios';
 	export default {
 		data() {
 			return {
 				modify:false,
 				userData:{
+					nickname: '用户',
 					age:'18',
 					birth:'1990-01-01',
 					email:'1@qq.com',
@@ -55,6 +58,19 @@
 		methods: {
 			onLoad(){
 				//获取用户信息
+				if(this.$store.state.userInfo.user_id){
+					axios.get("/api/user/"+this.$store.state.userInfo.user_id,{
+						headers:{'Authorization': 'Bearer '+this.$store.state.userInfo.access_token}
+					})
+					.then(res => {
+						console.log(res)
+					    if (res.status === 200) {
+							this.userData=res.data
+					    } else {
+					        //
+					    }
+					})
+				}
 			},
 			modifyInfo(){
 				this.modify=true
