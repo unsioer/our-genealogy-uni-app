@@ -132,7 +132,7 @@
 	        "selectedIconPath": "static/logo.png",
 	        "text": "广场"
 	    }, {
-	        "pagePath": "pages/family trees/family trees",
+	        "pagePath": "pages/familyTrees/familyTrees",
 	        "iconPath": "static/logo.png",
 	        "selectedIconPath": "static/logo.png",
 	        "text": "家谱"
