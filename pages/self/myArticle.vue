@@ -16,6 +16,7 @@
 	</view>
 </template>
 <script>
+	import axios from 'axios'
 	export default {
 		data() {
 			return {
@@ -40,6 +41,19 @@
 		methods: {
 			onLoad() {
 				//获取infoData，即获得消息的API
+				if(this.$store.state.userInfo.access_token){
+					axios.get("/api/articles/mine",{
+						headers:{'Authorization': 'Bearer '+this.$store.state.userInfo.access_token}
+					})
+					.then(res => {
+						console.log(res)
+					    if (res.status === 200) {
+							this.infoData=res.data
+					    } else {
+					        //
+					    }
+					})
+				}
 			},
 			showMore(id) {
 				console.log("查看" + id + "更多信息")

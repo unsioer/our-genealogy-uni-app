@@ -2,8 +2,7 @@
 	<view>
 		<view class="userback">
 			<img class="head" src="static/logo.png">
-			<textarea class="uni-textarea" v-model="userData.nickname" style="display:initial;"></textarea>
-			
+			<view class="userName">{{userData.nickname}}</view>
 		</view>	
 		<uni-forms ref="form" :value="userData" validate-trigger="bind" err-show-type="undertext" :rules="rules">
 			<uni-group title="基本信息">
@@ -58,8 +57,8 @@
 		methods: {
 			onLoad(){
 				//获取用户信息
-				if(this.$store.state.userInfo.user_id){
-					axios.get("/api/user/"+this.$store.state.userInfo.user_id,{
+				if(this.$store.state.userInfo.access_token){
+					axios.get("/api/user",{
 						headers:{'Authorization': 'Bearer '+this.$store.state.userInfo.access_token}
 					})
 					.then(res => {

@@ -17,6 +17,7 @@
 	</view>
 </template>
 <script>
+	import axios from 'axios';
 	export default {
 		data() {
 			return {
@@ -41,6 +42,16 @@
 		methods: {
 			onLoad() {
 				//获取infoData，即获得消息的API
+				axios.get("/api/articles")
+				.then(res => {
+					console.log(res)
+				    if (res.status === 200) {
+						this.infoData=res.data
+						//this.Data=res.data
+				    } else {
+				        //
+				    }
+				})
 			},
 			showMore(id) {
 				console.log("查看" + id + "更多信息")

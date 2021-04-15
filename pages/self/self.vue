@@ -2,7 +2,7 @@
 	<view>
 		<view class="userback">
 			<img class="head" src="static/logo.png">
-			<view class="userName">用户名</view>
+			<view class="userName">{{userData.nickname}}</view>
 		</view>	
 		
 			
@@ -43,13 +43,33 @@
 </template>
 
 <script>
+	import axios from 'axios';
 	export default {
 		data() {
 			return {
-				
+				userData:{
+					nickname: '用户',
+				}
 			}
 		},
 		methods: {
+			onLoad(){
+				//获取用户信息
+				console.log(this.$store.state.userInfo.access_token)
+				if(this.$store.state.userInfo.access_token){
+					axios.get("/api/user",{
+						headers:{'Authorization': 'Bearer '+this.$store.state.userInfo.access_token}
+					})
+					.then(res => {
+						console.log(res)
+					    if (res.status === 200) {
+							this.userData=res.data
+					    } else {
+					        //
+					    }
+					})
+				}
+			},
 			login(){
 				if(this.$store.state.hasLogin){//已经登录状态，退出
 					this.$store.commit('logout',this.$store.state.userInfo)
