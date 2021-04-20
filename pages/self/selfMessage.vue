@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 循环卡片视图 -->
-		<view class="example-body" v-for="item in infoData" :key="index">
+		<view class="example-body" v-for="item in infoData" :key="item.index">
 			<uni-card :title="item.type" :extra="item.modified_time" :thumbnail="item.thumbnail" @click="showMore(item.id)">
 			    {{item.user}} {{item.type}}了你发表的: {{item.title}}
 			</uni-card>

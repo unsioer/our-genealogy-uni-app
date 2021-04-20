@@ -142,6 +142,22 @@
             }
             
         }
+		,{
+		    "path" : "pages/self/selfInfoForOther",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "",
+		        "enablePullDownRefresh": false
+		    }   
+		}
+		,{
+		    "path" : "pages/familyTrees/memberList",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "",
+		        "enablePullDownRefresh": false
+		    }   
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

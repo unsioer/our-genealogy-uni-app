@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="userback">
+		<view class="userback" @click="changeAvatar()">
 			<img class="head" src="static/logo.png">
 			<view class="userName">{{userData.nickname}}</view>
 		</view>	
@@ -23,20 +23,19 @@
 				</uni-forms-item>
 			</uni-group>
 			
-		</uni-forms>
-		<button type="default" @click="modifyInfo()" v-if="modify===false">修改个人信息</button>
-		<button type="default" @click="confirmInfo()" v-if="modify">确定</button>
-		<uni-forms>
+		<button class="btn" type="default" @click="modifyInfo()" v-if="modify===false" >修改个人信息</button>
+		<button class="btn" type="default" @click="confirmInfo()" v-if="modify">确定</button>
+		
 			<uni-group title="绑定信息">
 				<uni-forms-item name="email" label="邮箱">
 					<uni-easyinput disabled v-model="userData.email"></uni-easyinput>
 				</uni-forms-item>
-				<button type="primary">解绑邮箱</button>
+				<button class="btn" type="primary">解绑邮箱</button>
 				<uni-forms-item></uni-forms-item>
 				<uni-forms-item name="tel" label="手机号">
 					<uni-easyinput disabled v-model="userData.tel"></uni-easyinput>
 				</uni-forms-item>
-				<button type="primary">解绑手机号</button>
+				<button class="btn" type="primary">解绑手机号</button>
 			</uni-group>
 		</uni-forms>
 	</view>
@@ -103,6 +102,10 @@
 				this.sex[0].disabled = true;
 				this.sex[1].disabled = true;
 				this.sex[2].disabled = true;
+			},
+			changeAvatar(){
+				console.log("更改头像")
+				//更改头像API
 			}
 		}
 	}
@@ -129,5 +132,8 @@
 		border: 1px #e5e5e5 solid;
 		border-radius: 5px;
 		box-sizing: border-box;
+	}
+	.btn{
+		width: 180px;
 	}
 </style>
