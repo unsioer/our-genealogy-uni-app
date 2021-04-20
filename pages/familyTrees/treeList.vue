@@ -45,7 +45,7 @@
 
 <style>
 	.list_continer {
-		height: 200px;
+		height: 100px;
 		display:flex;
 		flex-direction:column;
 		align-items:center;

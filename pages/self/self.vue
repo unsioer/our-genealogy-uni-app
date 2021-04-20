@@ -11,32 +11,77 @@
 		</view>	
 		
 		<view class="function">
-			<view class="container">
-				<view class = "divClass">
-					<navigator url="selfInfo">
-						<img src="static/logo.png">
-					</navigator>
-					<view class="text">个人信息</view>
-				</view>
-				<view class = "divClass">
-					<navigator url="../familyTrees/treeList">
-						<img src="static/logo.png">
-					</navigator>
-					<view class="text">家谱列表</view>
-				</view>
-				<view class = "divClass">
-					<navigator url="myArticle">
-						<img src="static/logo.png">
-					</navigator>
-					<view class="text">我的推送</view>
-				</view>
-				<view class = "divClass">
-					<navigator url="selfMessage">
-						<img src="static/logo.png">
-					</navigator>
-					<view class="text">我的消息</view>
-				</view>
-			</view>
+		<uni-table>
+			<uni-tr></uni-tr>
+			<uni-tr>
+				<uni-th align="center">
+					<view class = "divClass">
+						<navigator url="selfInfo">
+							<img src="static/logo.png">
+						</navigator>
+						<view class="text">个人信息</view>
+					</view>
+				</uni-th>
+				<uni-th align="center">
+					<view class = "divClass">
+						<navigator url="../familyTrees/treeList">
+							<img src="static/logo.png">
+						</navigator>
+						<view class="text">家谱列表</view>
+					</view>
+				</uni-th>
+				<uni-th align="center">
+					<view class = "divClass">
+						<navigator url="myArticle">
+							<img src="static/logo.png">
+						</navigator>
+						<view class="text">我的推送</view>
+					</view>
+				</uni-th>
+				<uni-th align="center">
+					<view class = "divClass">
+						<navigator url="selfMessage">
+							<img src="static/logo.png">
+						</navigator>
+						<view class="text">我的消息</view>
+					</view>
+				</uni-th>
+			</uni-tr>
+			<uni-tr>
+				<uni-td align="center">
+					<view class="divClass">
+						<navigator url="myFavorite">
+							<img src="static/logo.png">
+						</navigator>
+						<view class="text">我的收藏</view>
+					</view>
+				</uni-td>
+				<uni-td align="center">
+					<view class="divClass">
+						<navigator url="myConnment">
+							<img src="static/logo.png">
+						</navigator>
+						<view class="text">我的评论</view>
+					</view>
+				</uni-td>
+				<uni-td align="center">
+					<view class="divClass">
+						<navigator url="myLike">
+							<img src="static/logo.png">
+						</navigator>
+						<view class="text">我的点赞</view>
+					</view>
+				</uni-td>
+				<uni-td align="center">
+					<view class="divClass">
+						<navigator url="history">
+							<img src="static/logo.png">
+						</navigator>
+						<view class="text">历史记录</view>
+					</view>
+				</uni-td>
+			</uni-tr>
+		</uni-table>
 		</view>
 		
 	</view>
@@ -89,6 +134,12 @@
 </script>
 
 <style>
+	.function{
+		width: 100%;
+		text-align: center;
+		margin-top: 10%;
+	}
+	
 	.container{
 		background-color: #ffffff;
 		display: flex;
@@ -97,13 +148,8 @@
 		transform: translate(-50%, -50%);
 	}
 	
-	.function{
-		flex-direction: column;
-		margin-top: 10%;
-	}
-	
 	.divClass{
-		margin-right: 5%;
+		
 	}
 	
 	.userback {

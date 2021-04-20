@@ -13,6 +13,10 @@
 				</block>
 			</uni-card>
 		</view>
+		<view>
+			<uni-fab :content = "content" :pattern="pattern" horizontal="left" direction="horizontal"
+			vertical="bottom" @trigger="trigger"></uni-fab>
+		</view>
 	</view>
 </template>
 <script>
@@ -35,6 +39,26 @@
 						extra: '描述2',
 						modified_time: '2021-03-01'
 					}
+				],
+				pattern: {
+						color: '#7A7E83',
+						backgroundColor: '#fff',
+						selectedColor: '#007AFF',
+						buttonColor: '#007AFF'
+						},
+				content:[
+					{
+						iconPath: '/static/api.png',
+						selectedIconPath: '/static/apiHL.png',
+						text: '新建推送',
+						active: false
+					},
+					{
+						iconPath: '/static/api.png',
+						selectedIconPath: '/static/apiHL.png',
+						text: '修改推送',
+						active: false
+					},
 				]
 			}
 		},
@@ -67,6 +91,14 @@
 				console.log("用户" + this.$store.state.userInfo + "删除了:" + id)
 				//删除我的推送API
 			},
+			trigger(e){
+				console.log(e);
+				if(e.index == 0){
+					uni.navigateTo({
+						url:'../article/editor'
+					})
+				}
+			}
 		}
 	}
 </script>

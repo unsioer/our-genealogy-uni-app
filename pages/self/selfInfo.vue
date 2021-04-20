@@ -18,6 +18,9 @@
 				<uni-forms-item name="birth" label="出生日期" v-if="modify===false">
 					<uni-easyinput disabled v-model="userData.birth"></uni-easyinput>
 				</uni-forms-item>
+				<uni-forms-item name="sex" label="性别">
+					<uni-data-checkbox v-model="userData.sex" :localdata="sex" />
+				</uni-forms-item>
 			</uni-group>
 			
 		</uni-forms>
@@ -48,10 +51,28 @@
 				userData:{
 					nickname: '用户',
 					age:'18',
+					sex:'0',
 					birth:'1990-01-01',
 					email:'1@qq.com',
 					tel:'123456789'
-				}
+				},
+				sex:[
+					{
+						"value":'0',
+						"text":"男",
+						disabled: true
+					},
+					{
+						"value":'1',
+						"text":"女",
+						disabled: true
+					},
+					{
+						"value":'2',
+						"text":"保密",
+						disabled: true
+					},
+				]
 			}
 		},
 		methods: {
@@ -73,10 +94,15 @@
 			},
 			modifyInfo(){
 				this.modify=true
+				this.sex[0].disabled = false;
+				this.sex[1].disabled = false;
+				this.sex[2].disabled = false;
 			},
 			confirmInfo(){
 				this.modify=false
-				//
+				this.sex[0].disabled = true;
+				this.sex[1].disabled = true;
+				this.sex[2].disabled = true;
 			}
 		}
 	}
