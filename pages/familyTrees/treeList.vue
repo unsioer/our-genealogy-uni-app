@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<uni-table>
-			<view v-for="item in infoData" :key="index" class="list_continer">
+			<view v-for="item in infoData" :key="item.index" class="list_continer" @click="showMember(item.id)">
 				<uni-tr>
 					<uni-th align="center">
 						<view>
@@ -38,14 +38,18 @@
 			}
 		},
 		methods: {
-			
+			showMember(familyid){
+				uni.navigateTo({
+					url:'/pages/familyTrees/memberList?familyid='+familyid
+				})
+			}
 		}
 	}
 </script>
 
 <style>
 	.list_continer {
-		height: 200px;
+		height: 150px;
 		display:flex;
 		flex-direction:column;
 		align-items:center;

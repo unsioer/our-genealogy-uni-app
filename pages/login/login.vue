@@ -56,8 +56,10 @@
 				axios.post("/api/login", {email: this.loginData.email, password: this.loginData.password})
 				.then(res => {
 					console.log(res)
-				    if (res.status === 200) {
+				    if (res.status === 200 && res.data.access_token!=null){
 						//保存用户信息到store
+						this.loginData.user_id = res.data.user_id;
+						this.loginData.access_token = res.data.access_token
 						this.$store.commit('login',this.loginData)
 						//跳转
 				        uni.switchTab({

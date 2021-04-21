@@ -13,9 +13,14 @@
 				</block>
 			</uni-card>
 		</view>
+		<view>
+			<uni-fab :content = "content" :pattern="pattern" horizontal="left" direction="horizontal"
+			vertical="bottom" @trigger="trigger"></uni-fab>
+		</view>
 	</view>
 </template>
 <script>
+	import axios from 'axios'
 	export default {
 		data() {
 			return {
@@ -34,12 +39,45 @@
 						extra: '描述2',
 						modified_time: '2021-03-01'
 					}
+				],
+				pattern: {
+						color: '#7A7E83',
+						backgroundColor: '#fff',
+						selectedColor: '#007AFF',
+						buttonColor: '#007AFF'
+						},
+				content:[
+					{
+						iconPath: '/static/api.png',
+						selectedIconPath: '/static/apiHL.png',
+						text: '新建推送',
+						active: false
+					},
+					{
+						iconPath: '/static/api.png',
+						selectedIconPath: '/static/apiHL.png',
+						text: '修改推送',
+						active: false
+					},
 				]
 			}
 		},
 		methods: {
 			onLoad() {
 				//获取infoData，即获得消息的API
+				if(this.$store.state.userInfo.access_token){
+					axios.get("/api/articles/mine",{
+						headers:{'Authorization': 'Bearer '+this.$store.state.userInfo.access_token}
+					})
+					.then(res => {
+						console.log(res)
+					    if (res.status === 200) {
+							this.infoData=res.data
+					    } else {
+					        //
+					    }
+					})
+				}
 			},
 			showMore(id) {
 				console.log("查看" + id + "更多信息")
@@ -53,6 +91,14 @@
 				console.log("用户" + this.$store.state.userInfo + "删除了:" + id)
 				//删除我的推送API
 			},
+			trigger(e){
+				console.log(e);
+				if(e.index == 0){
+					uni.navigateTo({
+						url:'../article/editor'
+					})
+				}
+			}
 		}
 	}
 </script>
