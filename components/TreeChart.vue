@@ -75,7 +75,7 @@ export default {
 </script>
 
 <style scoped>
-table{border-collapse: separate!important;border-spacing: 0!important;}
+table{border-collapse: separate!important;border-spacing: 0!important; width: 100%;}
 td{position: relative; vertical-align: top;padding:0 0 50px 0;text-align: center; }
 .extend_handle{position: absolute;left:50%;bottom:30px; width:10px;height: 10px;padding:10px;transform: translate3d(-15px,0,0);cursor: pointer;}
 .extend_handle:before{content:""; display: block; width:100%;height: 100%;box-sizing: border-box; border:2px solid;border-color:#ccc #ccc transparent transparent;
@@ -90,19 +90,17 @@ transform: rotateZ(135deg);transform-origin: 50% 50% 0;transition: transform eas
 .childLevel:last-child:after{right:50%;height:15px; border:2px solid;border-color:#ccc #ccc transparent transparent;border-radius: 0 6px 0 0;transform: translate3d(-1px,0,0)}
 .childLevel:first-child.childLevel:last-child::after{left:auto;border-radius: 0;border-color:transparent #ccc transparent transparent;transform: translate3d(1px,0,0)}
 .node{position: relative; display: inline-block;margin: 0 1em;box-sizing: border-box; text-align: center;}
-.node .person{position: relative; display: inline-block;z-index: 2;width:6em; overflow: hidden;}
-.node .person .avat{display: block;width:4em;height: 4em;margin:auto;overflow:hidden; background:#fff;border:3px solid #ccc;box-sizing: border-box;border-radius: 17px;}
+.node .person{position: relative; display: inline-block;z-index: 2;width:7em; overflow: hidden;}
+.node .person .avat{display: block;width:4em;height: 4em;margin:auto;overflow:hidden; background:#fff;border:2px solid #ccc;box-sizing: border-box;border-radius: 2em;}
 .node .person .avat image{width:100%;height: 100%;}
-.node .person .name{height:2em;line-height: 2em;overflow: hidden;width:100%;}
+.node .person .name{height:2em;line-height: 2em;overflow: hidden;width:100%; color:#111111}
 .node.hasmates::after{content: "";position: absolute;left:2em;right:2em;top:2em;border-top:2px solid #ccc;z-index: 1;}
 /* 横板 */
 .landscape{transform:translate(-100%,0) rotate(-90deg);transform-origin: 100% 0;}
-.landscape .node{text-align: left;height: 8em;width:8em;}
-.landscape .person{position: relative; transform: rotate(90deg);padding-left: 4.5em;height: 4em;top:4em;left: -1em;}
-.landscape .person .avat{position: absolute;left: 0;}
-.landscape .person .name{height: 4em; line-height: 4em;}
-.landscape .hasmates{position: relative;}
-.landscape .hasmates .person{position: absolute; }
-.landscape .hasmates .person:first-child{left:auto; right:-4em;}
-.landscape .hasmates .person:last-child{left: -4em;margin-left:0;}
+
+
+
+
+
+
 </style>
