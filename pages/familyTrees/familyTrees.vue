@@ -5,7 +5,7 @@
 		</scroll-view>
 		<uni-fab :pattern="pattern" :content="content" :horizontal="horizontal" :vertical="vertical"
 			:direction="direction" @trigger="trigger"></uni-fab>
-		<My-modal v-model="value" :mData="data" :type="type" @onConfirm="onConfirm" @cancel="cancel" navMask>
+		<My-modal v-model="value" :mData="data" :type="type" @onConfirm="onConfirm" navMask>
 		</My-modal>
 	</view>
 </template>
@@ -129,11 +129,11 @@
 				// eslint-disable-next-line
 				if(this.IsEdit === false)
 				{
-					console.log("111")
+					console.log("展开子树")
 				}
 				else
 				{
-					console.log("222")
+					console.log("编辑结点")
 					this.popTap(node);
 				}
 				
@@ -181,7 +181,35 @@
 			{
 				this.value = !this.value
 				this.data.title = node.name
-			}
+			},
+			
+			onConfirm(e){
+				switch(e.title){
+					case '编辑信息':
+						uni.showToast({title:`${e.title}`,icon:'loading', duration: 500})
+						break;
+					case '增加子孙':
+						uni.showToast({title:`${e.title}`,icon:'loading', duration: 500})
+						break;
+					case '增加配偶':
+						uni.showToast({title:`${e.title}`,icon:'loading', duration: 500})
+						break;
+					case '删除':
+						uni.showModal({
+						                        title: `${e.title}`,
+						                        content: '是否删除该人员？',
+						                        success: function (res) {
+						                            if (res.confirm) {
+						                                uni.showToast({title:'删除成功',icon:'success', duration: 500})
+						                            } else if (res.cancel) {
+						                                uni.showToast({title:'取消删除',icon:'none', duration: 500})
+						                            }
+						                        }
+						                    });
+						break;
+				}
+				
+			},
 		},
 }
 </script>
