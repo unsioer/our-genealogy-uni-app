@@ -6,7 +6,7 @@ Vue.use(Vuex)
 //实例store对象
 const store = new Vuex.Store({
 	state: {
-		hasLogin:true,        //用户是否登录
+		hasLogin:false,        //用户是否登录
 		userInfo:{}//用户信息	
 	},
 	mutations: {

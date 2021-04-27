@@ -14,6 +14,7 @@
 	</view>
 </template>
 <script>
+	import axios from 'axios'
 	export default {
 		data() {
 			return {
@@ -31,6 +32,23 @@
 				}],
 				strings: '<div style="text-align:center;"><img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/ceb770c0-5164-11eb-8a36-ebb87efcf8c0.png"/></div>'
 			}
+		},
+		methods:{
+			onLoad:async function(option){
+				console.log("应该显示的文章id是："+option.id);
+				
+					console.log('尝试请求')
+					axios.get("/api/article/"+option.id)
+					.then(res => {
+						console.log(res)
+					    if (res.status === 200) {
+							this.title=res.data.title
+							this.strings=res.data.content
+					    } else {
+					    }
+					})
+				
+			},
 		}
 	}
 </script>

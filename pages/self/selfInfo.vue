@@ -32,8 +32,8 @@
 				</uni-forms-item>
 				<button class="btn" type="primary">解绑邮箱</button>
 				<uni-forms-item></uni-forms-item>
-				<uni-forms-item name="tel" label="手机号">
-					<uni-easyinput disabled v-model="userData.tel"></uni-easyinput>
+				<uni-forms-item name="phone" label="手机号">
+					<uni-easyinput disabled v-model="userData.phone"></uni-easyinput>
 				</uni-forms-item>
 				<button class="btn" type="primary">解绑手机号</button>
 			</uni-group>
@@ -53,7 +53,7 @@
 					sex:'0',
 					birth:'1990-01-01',
 					email:'1@qq.com',
-					tel:'123456789'
+					phone:'123456789'
 				},
 				sex:[
 					{
@@ -78,7 +78,7 @@
 			onLoad(){
 				//获取用户信息
 				if(this.$store.state.userInfo.access_token){
-					axios.get("/api/user",{
+					axios.get("/api/user/",{
 						headers:{'Authorization': 'Bearer '+this.$store.state.userInfo.access_token}
 					})
 					.then(res => {

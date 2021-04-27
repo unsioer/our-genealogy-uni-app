@@ -117,6 +117,7 @@
 		methods: {
 			onLoad(){
 				//获取用户信息
+				console.log('this.$store.state.hasLogin:'+this.$store.state.hasLogin)
 				console.log(this.$store.state.userInfo.access_token)
 				if(this.$store.state.userInfo.access_token){
 					axios.get("/api/user",{
