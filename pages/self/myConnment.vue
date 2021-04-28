@@ -15,6 +15,8 @@
 	export default {
 		data() {
 			return {
+				page:1,
+				pageSize:5,
 				infoData:[
 					{
 						id: 1,

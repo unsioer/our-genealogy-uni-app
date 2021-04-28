@@ -53,12 +53,7 @@
 						text: '新建推送',
 						active: false
 					},
-					{
-						iconPath: '/static/api.png',
-						selectedIconPath: '/static/apiHL.png',
-						text: '修改推送',
-						active: false
-					},
+					
 				]
 			}
 		},

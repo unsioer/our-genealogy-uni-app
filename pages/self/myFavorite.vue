@@ -21,6 +21,8 @@
 		data() {
 			return {
 				modify: false,
+				page:1,
+				pageSize:5,
 				infoData:[
 					{
 						id: 1,
