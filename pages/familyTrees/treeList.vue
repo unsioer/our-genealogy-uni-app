@@ -1,5 +1,30 @@
 <template>
 	<view>
+		<view class="radioView">
+		    <checkbox-group @change="checkChange">
+		        <label class="radio">
+		            <checkbox value="create" :checked="true" />我创建的
+		        </label>
+		        <label class="radio">
+		            <checkbox value="manage" :checked="true" />我管理的
+		        </label>
+				<label class="radio">
+				    <checkbox value="join" :checked="true" />我加入的
+				</label>
+		    </checkbox-group>
+		</view>
+		
+		 <!-- <view class="uni-list">
+            <checkbox-group @change="checkboxChange">
+                <label class="uni-list-cell uni-list-cell-pd" v-for="item in items" :key="item.value">
+                    <view>
+                        <checkbox :value="item.value" :checked="item.checked" />
+                    </view>
+                    <view>{{item.name}}</view>
+                </label>
+            </checkbox-group>
+        </view> -->
+		
 		<uni-table>
 			<view v-for="item in infoData" :key="item.index" class="list_continer" @click="showMember(item._id)">
 				<uni-tr>
@@ -35,7 +60,21 @@
 						name: '标题2',
 						avatar_url: 'static/logo.png'
 					}
-				]
+				],
+				items: [{
+				                        value: 'USA',
+				                        name: '美国'
+				                    },
+				                    {
+				                        value: 'CHN',
+				                        name: '中国',
+				                        checked: 'true'
+				                    },
+				                    {
+				                        value: 'BRA',
+				                        name: '巴西'
+				                    },
+				                ]
 			}
 		},
 		methods: {
@@ -69,7 +108,15 @@
 				uni.navigateTo({
 					url:'/pages/familyTrees/memberList?familyid='+familyid
 				})
+			},
+			checkChange: function (e) {
+			    var values = e.detail.value;
+				for(var i =0; i<values.length; i++){
+					console.log(values[i])
+				}
+				//查看我创建的or管理的or加入的-API?传什么呢?
 			}
+			
 		}
 	}
 </script>
@@ -86,5 +133,13 @@
 	.img_class {
 		width: 20upx;
 		height: 20upx;
+	}
+	.radio{
+		margin-right: 25px;
+	}
+	.radioView{
+		margin-top: 10px;
+		margin-left: 20px;
+		height: 40px;
 	}
 </style>

@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="example-body" v-for="item in infoData" :key = 'index'>
+		<view class="example-body" v-for="item in infoData">
 			<uni-badge text="×" type="error" @click="deleteFavotite(item.id)" v-if="modify"></uni-badge>
 			<uni-card :title="item.title" :thumbnail="item.img_url" :note="item.extra" 
 			@click="showMore(item.id)">
@@ -78,7 +78,10 @@
 			confirmFavorite(){
 				this.modify = false;
 			},
-			
+			showMore(id) {
+				console.log("查看" + id + "更多信息")
+				//转推送信息页
+			},
 		}
 	}
 </script>

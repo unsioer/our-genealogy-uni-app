@@ -1,7 +1,7 @@
 <template>
 	<view>
 		
-		<view class="example-body" v-for="item in infoData" :key = 'index'>
+		<view class="example-body" v-for="item in infoData">
 			<uni-card :title="item.title" :note="item.extra" 
 			@click="showMore(item.id)">
 			    于{{item.modified_time}}评论了{{item.title}}
@@ -44,7 +44,10 @@
 			}
 		},
 		methods: {
-			
+			showMore(id) {
+				console.log("查看" + id + "更多信息")
+				//转推送信息页
+			},
 		}
 	}
 </script>

@@ -7,9 +7,9 @@
 				:extra="item.extra" note="true" @click="showMore(item._id)">
 				<block slot="footer">
 					<view class="footer-box">
-						<view class=""><text class="footer-box__item" @click="like(item._id)">收藏</text></view>
+						<view class=""><text class="footer-box__item" @click="like(item._id)">点赞</text></view>
 						<view class=""><text class="footer-box__item" @click="comment(item._id)">评论</text></view>
-						<view class=""><text class="footer-box__item" @click="share(item._id)">分享</text></view>
+						<view class=""><text class="footer-box__item" @click="favourite(item._id)">收藏</text></view>
 					</view>
 				</block>
 			</uni-card>
@@ -69,7 +69,7 @@
 						duration: 2000
 					});
 				} else {
-					console.log("用户" + this.$store.state.userInfo + "收藏了:" + id)
+					console.log("用户" + this.$store.state.userInfo + "点赞了:" + id)
 					//收藏API
 				}
 			},
@@ -86,7 +86,7 @@
 					//评论API
 				}
 			},
-			share(id) {
+			favourite(id) {
 				if (!this.$store.state.hasLogin) {
 					console.log("没有登录")
 					uni.showToast({
@@ -95,7 +95,7 @@
 						duration: 2000
 					});
 				} else {
-					console.log("用户" + this.$store.state.userInfo + "分享了:" + id)
+					console.log("用户" + this.$store.state.userInfo + "收藏了:" + id)
 					//分享API
 				}
 			},
