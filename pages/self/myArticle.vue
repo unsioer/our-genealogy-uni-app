@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 循环卡片视图 -->
-		<view class="example-body" v-for="item in infoData" :key="index">
+		<view class="example-body" v-for="item in infoData">
 			<uni-section class="timeClass" :title="item.modified_time" type="line"></uni-section>
 			<uni-card class="cardClass" :is-shadow="false" :title="item.title" mode="style" :thumbnail="item.thumbnail"
 				:extra="item.extra" note="true" @click="showMore(item.id)">
@@ -53,12 +53,7 @@
 						text: '新建推送',
 						active: false
 					},
-					{
-						iconPath: '/static/api.png',
-						selectedIconPath: '/static/apiHL.png',
-						text: '修改推送',
-						active: false
-					},
+					
 				]
 			}
 		},

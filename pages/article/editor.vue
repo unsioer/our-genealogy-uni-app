@@ -152,34 +152,34 @@
 			},
 			insertImage() {
 				uni.chooseImage({
-							count: 1,
-							success: (res) => {
-								// uni.uploadFile({
-								// 		url: 'http://0.0.0.0/file/upload-img', //域名+上传文件的请求接口 (根据你实际的接口来)       
-								// 		filePath: res.tempFilePaths[
-								// 		0], // tempFilePath可以作为img标签的src属性显示图片 服务器图片的路径         
-								// 		name: 'img',
-								// 		header: {
-								// 			"Content-Type": "multipart/form-data"
-								// 		},
-										this.editorCtx.insertImage({
-											src: res.tempFilePaths[0],
-											alt: '图像',
-											success: function() {
-												console.log('insert image success')
-											}
-										})
-									}
-								})
-						}
-					},
-					onLoad() {
-						uni.loadFontFace({
-							family: 'Pacifico',
-							source: 'url("https://sungd.github.io/Pacifico.ttf")'
+					count: 1,
+					success: (res) => {
+						// uni.uploadFile({
+						// 		url: 'http://0.0.0.0/file/upload-img', //域名+上传文件的请求接口 (根据你实际的接口来)       
+						// 		filePath: res.tempFilePaths[
+						// 		0], // tempFilePath可以作为img标签的src属性显示图片 服务器图片的路径         
+						// 		name: 'img',
+						// 		header: {
+						// 			"Content-Type": "multipart/form-data"
+						// 		},
+						this.editorCtx.insertImage({
+							src: res.tempFilePaths[0],
+							alt: '图像',
+							success: function() {
+								console.log('insert image success')
+							}
 						})
-					},
+					}
+				})
 			}
+		},
+		onLoad() {
+			uni.loadFontFace({
+				family: 'Pacifico',
+				source: 'url("https://sungd.github.io/Pacifico.ttf")'
+			})
+		},
+	}
 </script>
 
 <style>

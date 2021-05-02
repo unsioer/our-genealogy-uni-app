@@ -3,7 +3,7 @@
 		<view class="uni-margin-wrap">
 			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
 				:duration="duration">
-				<swiper-item v-for="item in imgList" :key="index">
+				<swiper-item v-for="item in imgList">
 					<view class="swiper-item">
 						<image :src="item.img" class="swiper-item_img" mode="aspectFill" @click="showMore(item.id)" />
 					</view>
@@ -12,15 +12,15 @@
 		</view>
 
 		<!-- 循环卡片视图 -->
-		<view class="example-body" v-for="item in infoData" :key="index">
+		<view class="example-body" v-for="item in infoData">
 			<uni-section :title="item.modified_time" type="line"></uni-section>
 			<uni-card :is-shadow="false" :title="item.title" mode="style" :thumbnail="item.img_url"
 				:extra="item.extra" note="true" @click="showMore(item.id)">
 				<block slot="footer">
 					<view class="footer-box">
-						<view class=""><text class="footer-box__item" @click="like(item.id)">收藏</text></view>
-						<view class=""><text class="footer-box__item" @click="showMore(item.id)">评论</text></view>
-						<view class=""><text class="footer-box__item" @click="share(item.id)">分享</text></view>
+						<view class=""><text class="footer-box__item" @click="like(item.id)">点赞</text></view>
+						<view class=""><text class="footer-box__item" @click="comment(item.id)">评论</text></view>
+						<view class=""><text class="footer-box__item" @click="favourite(item.id)">收藏</text></view>
 					</view>
 				</block>
 			</uni-card>
@@ -80,7 +80,7 @@
 						duration: 2000
 					});
 				} else {
-					console.log("用户" + this.$store.state.userInfo + "收藏了:" + id)
+					console.log("用户" + this.$store.state.userInfo + "点赞了:" + id)
 					//收藏API
 				}
 			},
@@ -97,7 +97,7 @@
 					//评论API
 				}
 			},
-			share(id) {
+			favourite(id) {
 				if (!this.$store.state.hasLogin) {
 					console.log("没有登录")
 					uni.showToast({
@@ -106,7 +106,7 @@
 						duration: 2000
 					});
 				} else {
-					console.log("用户" + this.$store.state.userInfo + "分享了:" + id)
+					console.log("用户" + this.$store.state.userInfo + "收藏了:" + id)
 					//分享API
 				}
 			},

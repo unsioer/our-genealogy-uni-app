@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="userback" @click="changeAvatar()">
-			<img class="head" src="static/logo.png">
+			<img class="head" :src="familyData.avatar_url" height="75" width="75">
 			<view>{{familyData.name}}</view>
 		</view>	
 			
@@ -20,7 +20,7 @@
 					<view class="text">人数</view>
 				</uni-th>
 				<uni-th>
-					<view class="text2">{{familyData.num}}</view>
+					<view class="text2">{{familyData.members.length}}</view>
 				</uni-th>
 			</uni-tr>
 		</uni-table>
@@ -35,12 +35,12 @@
 					<view class="text">角色</view>
 				</uni-th> -->
 			</uni-tr>
-			<uni-tr v-for="item in familyData.member" :key="item.index">
+			<uni-tr v-for="item in familyData.members" :key="item.index">
 				<uni-td >
-					<view class="text" @click="showPerson(item.id)" >{{item.name}}</view>
+					<view class="text" @click="showPerson(item._id)" >{{item.name}}</view>
 				</uni-td>
 				<uni-td >
-					<view class="text" @click="showPerson(item.id)">{{item.role}}</view>
+					<view class="text" @click="showPerson(item._id)">{{item.role}}</view>
 				</uni-td>
 			</uni-tr>
 		</uni-table>
@@ -53,16 +53,17 @@
 		data() {
 			return {
 				familyData:{
+					avatar_url: 'static/logo.png',
 					name: '李式家族',
 					num:10,
-					member:[
+					members:[
 						{
-							id:1,
+							_id:1,
 							name:'李老明',
 							role:'族长'
 						},
 						{
-							id:2,
+							_id:2,
 							name:'李小明',
 							role:'成员'
 						},
@@ -71,9 +72,54 @@
 			}
 		},
 		methods: {
-			onLoad:function(option){
+			onLoad:async function(option){
 				console.log("应该显示的家族id是："+option.familyid);
 				//获取用户信息
+				if(this.$store.state.userInfo.access_token){
+					console.log('尝试请求')
+					axios.get("/api/family/"+option.familyid,{
+							headers:{'Authorization': 'Bearer '+this.$store.state.userInfo.access_token}
+						})
+					.then(async res => {
+						console.log(res)
+					    if (res.status === 200) {
+							this.familyData=res.data;
+							let idArr=[];
+							for(var i=0;i<res.data.members.length;i++)
+							{
+								idArr.push(res.data.members[i]);
+							}
+							let urlArr=idArr.map(element => axios.get("/api/person/"+element,{
+										headers:{'Authorization': 'Bearer '+this.$store.state.userInfo.access_token}
+									}));
+							axios.all(urlArr)
+							.then(axios.spread((...arg) => {
+								Array.from([...arg]).forEach((element, index) => {
+									console.log(element)
+									this.familyData.members[index]={};
+									//this.familyData.members[i]=res.data.members[i];
+									this.familyData.members[index]._id=element.data._id;
+									this.familyData.members[index].name=element.data.name;
+								});
+							})
+							
+							);
+							console.log('新版')
+							console.log(this.familyData)
+							//this.Data=res.data
+					    } else {
+					        //
+					    }
+					})
+				}else{
+					console.log("没有登录")
+					uni.showToast({
+						title: '请先登录！',
+						icon: 'none',
+						duration: 2000
+					});
+				}
+				
 			},
 			showPerson(userid){
 				console.log("showPerson")

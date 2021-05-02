@@ -1,11 +1,19 @@
 <template>
 	<view>
 		
-		<view class="example-body" v-for="item in infoData" :key="index">
+		<view id="button_div">
+			<button type="primary" @click="deleteHistory()">删除历史记录</button>
+		</view>	
+		
+		<view class="example-body" v-for="item in infoData">
 			<uni-card :title="item.title" :extra="item.modified_time" :thumbnail="item.thumbnail" @click="showMore(item.id)">
 			    {{item.extra}}
 			</uni-card>
 		</view>
+		
+		<uni-popup ref="popup" type="dialog">
+		    <uni-popup-dialog title="确定删除历史记录？" :duration="2000" :before-close="open" @close="close" @confirm="confirm"></uni-popup-dialog>
+		</uni-popup>
 		
 	</view>
 </template>
@@ -14,6 +22,7 @@
 	export default {
 		data() {
 			return {
+				open:false,
 				infoData: [
 					{
 						id: 1,
@@ -40,11 +49,30 @@
 			}
 		},
 		methods: {
-			
+			deleteHistory(){
+				this.$refs.popup.open()
+			},
+			showMore(id) {
+				console.log("查看" + id + "更多信息")
+				//转推送信息页
+			},
+			close(){  
+				this.open=false
+			},
+			confirm(done,value){
+				console.log("删除历史记录")
+				//删除历史记录API
+				done()
+				this.open=false
+			}
 		}
 	}
 </script>
 
 <style>
-
+#button_div{
+		width: 100%;
+		position: fixed;
+		bottom: var(--window-bottom) ;	
+	}
 </style>

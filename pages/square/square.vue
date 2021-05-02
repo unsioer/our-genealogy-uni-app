@@ -4,12 +4,12 @@
 		<view class="example-body" v-for="item in infoData" :key="index">
 			<uni-section :title="item.modified_time" type="line"></uni-section>
 			<uni-card :is-shadow="false" :title="item.title" mode="style" :thumbnail="item.thumbnail"
-				:extra="item.extra" note="true" @click="showMore(item.id)">
+				:extra="item.extra" note="true" @click="showMore(item._id)">
 				<block slot="footer">
 					<view class="footer-box">
-						<view class=""><text class="footer-box__item" @click="like(item.id)">收藏</text></view>
-						<view class=""><text class="footer-box__item" @click="comment(item.id)">评论</text></view>
-						<view class=""><text class="footer-box__item" @click="share(item.id)">分享</text></view>
+						<view class=""><text class="footer-box__item" @click="like(item._id)">点赞</text></view>
+						<view class=""><text class="footer-box__item" @click="comment(item._id)">评论</text></view>
+						<view class=""><text class="footer-box__item" @click="favourite(item._id)">收藏</text></view>
 					</view>
 				</block>
 			</uni-card>
@@ -23,14 +23,14 @@
 			return {
 				test: 'testtitle',
 				infoData: [{
-						id: 1,
+						_id: 1,
 						title: '标题1',
 						thumbnail: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png',
 						extra: '描述1',
 						modified_time: '2021-03-01'
 					},
 					{
-						id: 2,
+						_id: 2,
 						title: '标题2',
 						thumbnail: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png',
 						extra: '描述2',
@@ -56,6 +56,9 @@
 			showMore(id) {
 				console.log("查看" + id + "更多信息")
 				//转推送信息页
+				uni.navigateTo({
+					url:'/pages/article/content?id='+id
+				})
 			},
 			like(id) {
 				if (!this.$store.state.hasLogin) {
@@ -66,7 +69,7 @@
 						duration: 2000
 					});
 				} else {
-					console.log("用户" + this.$store.state.userInfo + "收藏了:" + id)
+					console.log("用户" + this.$store.state.userInfo + "点赞了:" + id)
 					//收藏API
 				}
 			},
@@ -83,7 +86,7 @@
 					//评论API
 				}
 			},
-			share(id) {
+			favourite(id) {
 				if (!this.$store.state.hasLogin) {
 					console.log("没有登录")
 					uni.showToast({
@@ -92,7 +95,7 @@
 						duration: 2000
 					});
 				} else {
-					console.log("用户" + this.$store.state.userInfo + "分享了:" + id)
+					console.log("用户" + this.$store.state.userInfo + "收藏了:" + id)
 					//分享API
 				}
 			},
