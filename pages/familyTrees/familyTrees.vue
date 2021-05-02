@@ -1,8 +1,10 @@
 <template>
-	<view>
-		<scroll-view scroll-x scroll-y style="border: #0066CC solid 7rpx; border-radius: 15rpx;">
-			<TreeChart :json="treeData" :class="{landscape: IsVertical}" @click-node="clickNode" />
-		</scroll-view>
+	<view class="content">
+		<movable-area scale-area>
+			<movable-view class="max" direction="all" scale out-of-bounds>
+				<TreeChart :json="treeData" :class="{landscape: IsVertical}" @click-node="clickNode" />
+			</movable-view>
+		</movable-area>
 		<uni-fab :pattern="pattern" :content="content" :horizontal="horizontal" :vertical="vertical"
 			:direction="direction" @trigger="trigger"></uni-fab>
 		<My-modal v-model="value" :mData="data" :type="type" @onConfirm="onConfirm" navMask>
@@ -16,14 +18,31 @@
 	export default {
 		data() {
 			return {
-				value:false,
-				type:'genealogy',
-				data:
-				{title:'123',
-				content: [{title:'编辑信息'},{title: '增加子孙'},{title:'增加配偶'},{title:'删除'}],
+
+				value: false,
+				type: 'genealogy',
+				data: {
+					title: '123',
+					content: [{
+							title: '编辑信息',
+							type: 'table'
+						},
+						{
+							title: '增加子孙',
+							type: 'table'
+						},
+						{
+							title: '增加配偶',
+							type: 'table'
+						},
+						{
+							title: '删除',
+							type: 'button'
+						}
+					],
 				},
-				
-			
+
+
 				IsEdit: false,
 				IsVertical: false,
 				horizontal: 'left',
@@ -125,18 +144,24 @@
 			MyModal
 		},
 		methods: {
+			onLoad:function(option){
+				console.log("应该显示的家族id是："+option.familyid);
+				//获取用户信息
+			},
 			clickNode: function(node) {
 				// eslint-disable-next-line
-				if(this.IsEdit === false)
-				{
+				if (this.IsEdit === false) {
 					console.log("展开子树")
-				}
-				else
-				{
+					uni.showToast({
+						title: '展开子树',
+						duration: 500,
+						icon: "loading"
+					});
+				} else {
 					console.log("编辑结点")
 					this.popTap(node);
 				}
-				
+
 			},
 
 			trigger(e) {
@@ -149,9 +174,7 @@
 							duration: 500,
 							icon: "loading"
 						});
-					}
-					else
-					{
+					} else {
 						uni.showToast({
 							title: '只读模式',
 							duration: 500,
@@ -175,45 +198,104 @@
 						});
 					}
 				}
-			},	
-				
-			popTap(node)
-			{
+			},
+
+			popTap(node) {
 				this.value = !this.value
 				this.data.title = node.name
 			},
-			
-			onConfirm(e){
-				switch(e.title){
+
+			onConfirm(e) {
+				switch (e.title) {
 					case '编辑信息':
-						uni.showToast({title:`${e.title}`,icon:'loading', duration: 500})
+						uni.showToast({
+							title: `${e.title}`,
+							icon: 'loading',
+							duration: 500
+						})
 						break;
 					case '增加子孙':
-						uni.showToast({title:`${e.title}`,icon:'loading', duration: 500})
+						uni.showToast({
+							title: `${e.title}`,
+							icon: 'loading',
+							duration: 500
+						})
 						break;
 					case '增加配偶':
-						uni.showToast({title:`${e.title}`,icon:'loading', duration: 500})
+						uni.showToast({
+							title: `${e.title}`,
+							icon: 'loading',
+							duration: 500
+						})
 						break;
 					case '删除':
 						uni.showModal({
-						                        title: `${e.title}`,
-						                        content: '是否删除该人员？',
-						                        success: function (res) {
-						                            if (res.confirm) {
-						                                uni.showToast({title:'删除成功',icon:'success', duration: 500})
-						                            } else if (res.cancel) {
-						                                uni.showToast({title:'取消删除',icon:'none', duration: 500})
-						                            }
-						                        }
-						                    });
+							title: `${e.title}`,
+							content: '是否删除该人员？',
+							success: function(res) {
+								if (res.confirm) {
+									uni.showToast({
+										title: '删除成功',
+										icon: 'success',
+										duration: 500
+									})
+								} else if (res.cancel) {
+									uni.showToast({
+										title: '取消删除',
+										icon: 'none',
+										duration: 500
+									})
+								}
+							}
+						});
 						break;
 				}
-				
+
 			},
 		},
-}
+	}
 </script>
 
 <style>
+	.content{
+		height: 2000rpx;
+		width: 1600rpx;
+	}
+	movable-view {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 
+		color: #fff;
+	}
+	
+	movable-area {
+		
+		height: 2000rpx;
+		width: 1600rpx;
+		background-color: #F0F0F0;
+		overflow: hidden;
+	}
+	
+	.form-wrap {
+		margin-bottom: 124upx;
+		padding: 0 30upx;
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+
+		/deep/ .input-item {
+			padding: 40upx 0;
+
+			.left-text {
+				font-size: 32upx;
+			}
+
+			.input-wrap {
+				input {
+					font-size: 32upx;
+				}
+			}
+		}
+	}
 </style>
