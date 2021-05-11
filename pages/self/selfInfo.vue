@@ -57,6 +57,10 @@
 
 <script>
 	import axios from 'axios';
+	import {
+		pathToBase64,
+		base64ToPath
+	} from '../../js_sdk/mmmm-image-tools/index.js'
 	export default {
 		data() {
 			return {
@@ -116,12 +120,12 @@
 					axios.get("/api/user/", {
 							headers: {
 								'Authorization': 'Bearer ' + this.$store.state.userInfo.access_token
-							}
+							},
 						})
 						.then(res => {
 							console.log(res)
 							if (res.status === 200) {
-								this.userData = res.data
+								this.userData = res.data;
 							} else {
 								//
 							}
@@ -154,30 +158,62 @@
 				this.preImgurl = this.avatarImgurl;
 				uni.chooseImage({
 					count: 1,
+					sizeType: ['compressed'],
 					sourceType: ['album'],
 					success: (res) => {
 						this.preImgurl = res.tempFilePaths[0];
 						this.preview = true;
 						console.log("图片显示成功");
+						var base64file = '';
+						pathToBase64(res.tempFilePaths[0])
+							.then(base64 => {
+								base64file = base64;
+								console.log(base64)
+							})
+							.catch(error => {
+								console.error(error)
+							})
+						// var fileReader = new FileReader();
+						// fileReader.readAsDataURL(res.tempFiles[0])
+						// fileReader.onLoad = function(){
+						// 	base64file = fileReader.result;
+						// }
+						axios.post("/api/file/json", {
+								headers: {
+									'Authorization': 'Bearer ' + this.$store.state.userInfo.access_token
+									//'content-type': 'application/json',
+								},
+								filename: res.tempFiles[0].name,
+								content: base64file,
+							})
+							.then(res => {
+								console.log(res)
+								if (res.status === 200) {
+									console.log("图片上传成功" + res.data.filename);
+									this.avatarImgurl = '/api/file/' + res.data.filename;
+									
+								} else {
+									//
+								}
+							})
 					}
 				})
 			},
 			uploadImg() {
-				// uni.uploadFile({
-				// 	url:'',
-				// 	filePath: this.preImgurl,
-				// 	name: '',
-				// 	header:{
-
-				// 	}
-				// })
-				this.avatarImgurl = this.preImgurl;
+				// if(if(this.$store.state.userInfo.access_token)){
+				// 	axios.post("/api/file",{
+				// 		'Authorization': 'Bearer ' + this.$store.state.userInfo.access_token,
+				// 	})
+				// }
+				//console.log(this.$store.state.userInfo.access_token)
+				//this.avatarImgurl = this.preImgurl;
 				this.$refs.popup.close();
 			},
 			cinema() {
 				console.log("拍照");
 				uni.chooseImage({
 					count: 1,
+					sizeType: ['compressed'],
 					sourceType: ['camera'],
 					success: (res) => {
 						console.log(res);
@@ -195,7 +231,8 @@
 		background-color: #ffffff;
 		background-repeat: no-repeat;
 		background-size: 100%;
-		text-align: center
+		text-align: center;
+		margin-top: 10px;
 	}
 
 	.head {

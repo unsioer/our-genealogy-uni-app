@@ -1,20 +1,22 @@
 <template>
 	<view>
-		
+
 		<view id="button_div">
 			<button type="primary" @click="deleteHistory()">删除历史记录</button>
-		</view>	
-		
+		</view>
+
 		<view class="example-body" v-for="item in infoData">
-			<uni-card :title="item.title" :extra="item.modified_time" :thumbnail="item.thumbnail" @click="showMore(item.id)">
-			    {{item.extra}}
+			<uni-card :title="item.title" :extra="item.modified_time" :thumbnail="item.thumbnail"
+				@click="showMore(item.id)">
+				{{item.extra}}
 			</uni-card>
 		</view>
-		
+
 		<uni-popup ref="popup" type="dialog">
-		    <uni-popup-dialog title="确定删除历史记录？" :duration="2000" :before-close="open" @close="close" @confirm="confirm"></uni-popup-dialog>
+			<uni-popup-dialog title="确定删除历史记录？" :duration="2000" :before-close="open" @close="close" @confirm="confirm">
+			</uni-popup-dialog>
 		</uni-popup>
-		
+
 	</view>
 </template>
 
@@ -22,57 +24,74 @@
 	export default {
 		data() {
 			return {
-				open:false,
-				infoData: [
-					{
+				open: false,
+				infoData: [{
 						id: 1,
 						thumbnail: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png',
 						modified_time: '2021-03-03',
-						extra:'预览1',
-						title:'标题1'
+						extra: '预览1',
+						title: '标题1'
 					},
 					{
 						id: 2,
 						thumbnail: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png',
 						modified_time: '2021-03-03',
-						extra:'预览2',
-						title:'标题2'
+						extra: '预览2',
+						title: '标题2'
 					},
 					{
 						id: 3,
 						thumbnail: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png',
 						modified_time: '2021-03-03',
-						extra:'预览3',
-						title:'标题3'
+						extra: '预览3',
+						title: '标题3'
 					},
 				],
 			}
 		},
 		methods: {
-			deleteHistory(){
+			onLoad() {
+				if (this.this.$store.state.hasLogin == false) {
+					uni.getStorage({
+						key: 'history',
+						success: function(res) {
+							console.log(res.data);
+							this.infoData = res.data;
+						},
+						fail: function(res) {
+							console.log("暂无记录")
+						}
+					});
+				} else{
+					//调用后端存储的历史记录
+				}
+
+			},
+
+			deleteHistory() {
 				this.$refs.popup.open()
 			},
 			showMore(id) {
 				console.log("查看" + id + "更多信息")
 				//转推送信息页
 			},
-			close(){  
-				this.open=false
+			close() {
+				this.open = false
 			},
-			confirm(done,value){
+			confirm(done, value) {
 				console.log("删除历史记录")
 				//删除历史记录API
 				done()
-				this.open=false
+				this.open = false
 			}
 		}
 	}
 </script>
 
 <style>
-#button_div{
+	#button_div {
 		width: 100%;
 		position: fixed;
-		bottom: var(--window-bottom) ;	
+		bottom: var(--window-bottom);
 	}
 </style>

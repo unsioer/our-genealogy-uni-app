@@ -74,6 +74,7 @@
 		<movable-area class="fixed-box">
 			<movable-view class="fixed-button">
 				<button type="primary" @click="saveArtical()">保存</button>
+				<button type="primary" @click="saveArtical()">发表</button>
 			</movable-view>
 		</movable-area>
 
@@ -81,6 +82,11 @@
 </template>
 
 <script>
+	import axios from 'axios';
+	import {
+		pathToBase64,
+		base64ToPath
+	} from '../../js_sdk/mmmm-image-tools/index.js'
 	export default {
 		data() {
 			return {
@@ -151,19 +157,40 @@
 				})
 			},
 			insertImage() {
+				let url = '';
 				uni.chooseImage({
 					count: 1,
 					success: (res) => {
-						// uni.uploadFile({
-						// 		url: 'http://0.0.0.0/file/upload-img', //域名+上传文件的请求接口 (根据你实际的接口来)       
-						// 		filePath: res.tempFilePaths[
-						// 		0], // tempFilePath可以作为img标签的src属性显示图片 服务器图片的路径         
-						// 		name: 'img',
-						// 		header: {
-						// 			"Content-Type": "multipart/form-data"
-						// 		},
+						var base64file = '';
+						pathToBase64(res.tempFilePaths[0])
+							.then(base64 => {
+								base64file = base64;
+								console.log(base64)
+							})
+							.catch(error => {
+								console.error(error)
+							})
+						axios.post("/api/file/json", {
+								headers: {
+									'Authorization': 'Bearer ' + this.$store.state.userInfo.access_token
+									//'content-type': 'application/json',
+								},
+								filename: res.tempFiles[0].name,
+								content: base64file,
+							})
+							.then(res => {
+								console.log(res)
+								if (res.status === 200) {
+									console.log("图片上传成功");
+									url = '/api/file/' + res.data.filename;
+									console.log(url)
+								} else {
+									//
+								}
+							})
+
 						this.editorCtx.insertImage({
-							src: res.tempFilePaths[0],
+							src: url,
 							alt: '图像',
 							success: function() {
 								console.log('insert image success')
